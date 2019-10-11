@@ -32,10 +32,49 @@ class Matrix {
     // matrix multiplication (this * rhs)
     mult(rhs) {
         var result = null;
+
         // ensure multiplication is valid
         if (rhs instanceof Matrix && this.columns === rhs.rows) {
             // implement matrix multiplication here!
+            var value_arr = [];
+            for(var i = 0; i < this.rows; i++){
+                for(var k = 0; k <rhs.columns; k++){
+                    console.log("spot: " + i + k);
+                    var current_val = 0;
+                    for(var j = 0; j < this.columns; j++){
+                        console.log(this.data[i][j]);
+                        console.log(rhs.data[j][k]);
+                        current_val += (this.data[i][j]) * (rhs.data[j][k]);
+                        console.log("");
+                    }
+                    value_arr.push(current_val);
+                    console.log("current_val: " + current_val);
+                    console.log("");
+                }
+            }
+            console.log("value_arr: " + value_arr);
+            // value_arr = value_arr.reverse();
+            console.log("value_arr: " + value_arr);
+
+            result = new Matrix(this.rows, rhs.columns);
+
+            var new_data = [];
+            for (i = 0; i < rhs.columns; i++) {
+                new_data.push([]);
+            }
+
+
+            var count = 0;
+            for (i = 0; i < this.rows; i++) {
+                for (j = rhs.columns-1; j >= 0 ; j--) {
+                    new_data[i].push(value_arr[count]);
+                    count += 1;
+                }
+            }
+            console.log("new_data: " + new_data);
+            result.values = new_data;
         }
+
         else {
             console.log("could not multiply - row/column mismatch");
         }
