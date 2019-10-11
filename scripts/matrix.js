@@ -37,33 +37,41 @@ class Matrix {
         if (rhs instanceof Matrix && this.columns === rhs.rows) {
             // implement matrix multiplication here!
             var value_arr = [];
+            // Outter loop the number of rows in the left matrix
+            // This is to go across each row of the left matrix in order
             for(var i = 0; i < this.rows; i++){
+                // loop across each column of the rhs matrix to apply the current row of the left matrix to each
+                // Column of the right matrix
                 for(var k = 0; k <rhs.columns; k++){
                     console.log("spot: " + i + k);
                     var current_val = 0;
+                    // loop across the number of columns of the left matrix (could be the number of rows of right matrix)
+                    // to multiply the elements from the left and right matrix and add them together
                     for(var j = 0; j < this.columns; j++){
                         console.log(this.data[i][j]);
                         console.log(rhs.data[j][k]);
+                        // Multiply cortisponding elements and add them to the new current_value
                         current_val += (this.data[i][j]) * (rhs.data[j][k]);
                         console.log("");
                     }
+                    // Push current value onto array of values
                     value_arr.push(current_val);
                     console.log("current_val: " + current_val);
                     console.log("");
                 }
             }
             console.log("value_arr: " + value_arr);
-            // value_arr = value_arr.reverse();
-            console.log("value_arr: " + value_arr);
 
+            // Create new matrix for result
             result = new Matrix(this.rows, rhs.columns);
 
+            // Build empty data matrix
             var new_data = [];
             for (i = 0; i < rhs.columns; i++) {
                 new_data.push([]);
             }
 
-
+            // fill data matrix with the values from our 1d calculated matrix
             var count = 0;
             for (i = 0; i < this.rows; i++) {
                 for (j = rhs.columns-1; j >= 0 ; j--) {
@@ -72,6 +80,7 @@ class Matrix {
                 }
             }
             console.log("new_data: " + new_data);
+            // set the values of our result matrix to the new data matrix
             result.values = new_data;
         }
 
